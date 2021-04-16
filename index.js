@@ -10,7 +10,7 @@ const init = () => {
       choices: [
         "View Employees",
         "Add Employee",
-        "Add Role",
+        "Remove Employee",
         "Quit"
       ]
     }).then(({tasks}) => {
@@ -21,8 +21,8 @@ const init = () => {
             case "Add Employee":
               addEmployee();
               break;
-            case "Add Role":
-              addRole();
+            case "Remove Employee":
+              removeEmployee();
               break;
             case "Quit":
               connection.end();
@@ -54,7 +54,65 @@ const viewEmployees = () => {
 
  const addEmployee = () => {
 
- }
+  var query =
+    `SELECT r.id, r.title, r.salary 
+      FROM role r`
+
+  connection.query(query, function (err, res) {
+    if (err) throw err;
+
+    const roleChoices = res.map(({ id, title, salary }) => ({
+      value: id, title: `${title}`, salary: `${salary}`
+    }));
+
+    console.table(res);    
+
+    insertEmployee(roleChoices);
+  });
+ };
+ 
+ const insertEmployee = (roleChoices) => {
+
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: "What is the employee's first name?"
+      },
+      {
+        type: "input",
+        name: "lastName",
+        message: "What is the employee's last name?"
+      },
+      {
+        type: "list",
+        name: "roleId",
+        message: "What is the employee's role?",
+        choices: roleChoices
+      },
+    ]).then((answer) => {
+      console.log(answer);
+
+      var query = `INSERT INTO employee SET ?`      
+      connection.query(query,
+        {
+          first_name: answer.firstName,
+          last_name: answer.lastName,
+          role_id: answer.roleId,
+          manager_id: answer.managerId,
+        },
+        function (err, res) {
+          if (err) throw err;
+
+          console.table(res);
+          console.log(res.insertedRows + "Inserted successfully!\n");
+
+          init();
+        });      
+    });
+};
+
 
 connection.connect((err) => {
   if (err) throw err;
