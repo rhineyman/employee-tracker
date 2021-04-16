@@ -43,7 +43,7 @@ const viewEmployees = () => {
   LEFT JOIN employee m
 	ON m.id = e.manager_id`
 
-  connection.query(query, function (err, res) {
+  connection.query(query, (err, res) => {
     if (err) throw err;
 
     console.table(res);   
@@ -58,7 +58,7 @@ const viewEmployees = () => {
     `SELECT r.id, r.title, r.salary 
       FROM role r`
 
-  connection.query(query, function (err, res) {
+  connection.query(query, (err, res) => {
     if (err) throw err;
 
     const roleChoices = res.map(({ id, title, salary }) => ({
@@ -102,7 +102,7 @@ const viewEmployees = () => {
           role_id: answer.roleId,
           manager_id: answer.managerId,
         },
-        function (err, res) {
+        (err, res) => {
           if (err) throw err;
 
           console.table(res);
@@ -112,6 +112,7 @@ const viewEmployees = () => {
         });      
     });
 };
+
 
 
 connection.connect((err) => {
