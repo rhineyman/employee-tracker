@@ -27,8 +27,6 @@ CREATE TABLE employee (
   PRIMARY KEY (id)
 );
 
-USE employees_db;
-
 INSERT INTO department (name)
 VALUES ("Sales");
 INSERT INTO department (name)
@@ -48,6 +46,8 @@ INSERT INTO role (title, salary, department_id)
 VALUES ("Accountant", 1250, 3);
 INSERT INTO role (title, salary, department_id)
 VALUES ("Legal Team Lead", 2500, 4);
+
+USE employees_db;
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Tim", "Allen", 1, 3);
