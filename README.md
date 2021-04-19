@@ -11,3 +11,8 @@ An SQL project to keep track of employees and important information
 -running npm start in console will run the program showing a current working directory and prompting the user
 
 -quit kills connection 
+
+
+-github: https://github.com/rhineyman/employee-tracker
+
+-video demonstration: https://www.youtube.com/watch?v=ptmvNkYE4q4
